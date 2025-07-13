@@ -5,17 +5,31 @@ package use_case.logout;
  */
 public class LogoutOutputData {
 
-    private String username;
-    private boolean useCaseFailed;
+    private final String username;
+    private final boolean useCaseFailed;
 
+    /**
+     * 1234556.
+     * @param username      the user who just logged out
+     * @param useCaseFailed true if logout failed (unused here), false otherwise
+     */
     public LogoutOutputData(String username, boolean useCaseFailed) {
-        // TODO: save the parameters in the instance variables.
+        this.username = username;
+        this.useCaseFailed = useCaseFailed;
     }
 
+    /**
+     * 123455.
+     * @return the username that was logged out
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * 1234455.
+     * @return true if the logout use case failed; false means success
+     */
     public boolean isUseCaseFailed() {
         return useCaseFailed;
     }

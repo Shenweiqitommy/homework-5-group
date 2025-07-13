@@ -4,22 +4,32 @@ package use_case.logout;
  * The Logout Interactor.
  */
 public class LogoutInteractor implements LogoutInputBoundary {
-    private LogoutUserDataAccessInterface userDataAccessObject;
-    private LogoutOutputBoundary logoutPresenter;
+    private final LogoutUserDataAccessInterface userDataAccessObject;
+    private final LogoutOutputBoundary logoutPresenter;
 
+    /**
+     * 123455.
+     * @param userDataAccessInterface the DAO that tracks current user
+     * @param logoutOutputBoundary    the presenter to call after logout
+     */
     public LogoutInteractor(LogoutUserDataAccessInterface userDataAccessInterface,
                             LogoutOutputBoundary logoutOutputBoundary) {
-        // TODO: save the DAO and Presenter in the instance variables.
-        // Which parameter is the DAO and which is the presenter?
+        this.userDataAccessObject = userDataAccessInterface;
+        this.logoutPresenter = logoutOutputBoundary;
     }
 
     @Override
     public void execute(LogoutInputData logoutInputData) {
-        // TODO: implement the logic of the Logout Use Case (depends on the LogoutInputData.java TODO)
-        // * get the username out of the input data,
-        // * set the username to null in the DAO
-        // * instantiate the `LogoutOutputData`, which needs to contain the username.
-        // * tell the presenter to prepare a success view.
+        // 1. read who is logging out
+        final String username = logoutInputData.getUsername();
+
+        // 2. clear the “current user” in the DAO
+        userDataAccessObject.setCurrentUsername(null);
+
+        // 3. package up the output (username + success flag)
+        final LogoutOutputData outputData = new LogoutOutputData(username, false);
+
+        // 4. hand off to the presenter
+        logoutPresenter.prepareSuccessView(outputData);
     }
 }
-
